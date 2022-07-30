@@ -125,3 +125,94 @@ An interconnecting device is used to allow two or more computers to communicate 
 These layers represent each step required for a client to access a network resource. Each layer has specific task with each layer working together.
 
 ![Figure 1-6: Layers of the network communication process](assets/network-communication-process-diagram.png)
+
+### Network Architecture
+Network architecture is the structural layout of a network including:
+- Its physical components and their functional organisation and configuration
+- Its operational principles and procedures
+- Its data formats
+
+There are two models that can be used when describing a networks architecture:
+1. The TCP/IP protocol suite
+2. The Open System Interconnection (OSI) model
+
+Both of these models use layers to describe the software and hardware needed to transmit data between devices.
+
+![Figure 7-2: Comparing the OSI model and the TCP/IP model](assets/osi-vs-tcp-ip.png)
+
+### The Open Systems Interconnection (OSI) reference model
+The OSI model was proposed by the International Organisation for Standardisation (ISO) to provide a common framework for developers and students to learn from. It was designed to be applied to most networking protocols therefor is not specific to any protocol suite.
+
+The OSI model is made up of seven layers and shows how data travels from one device to another on any given network. Each layer provides its services to the layer above until the data reaches the application layer where it provides the services to the user application. Each layer on a device behaves as if it were connecting with the same layer on the connecting device, this is known as peer communication between layers.
+
+![Figure 7-4: Peer communication between OSI layers](assets/osi-peer-communication.png)
+
+### Encapsulation in Networking
+Control information is either added or removed from a layer depending on whether the data is being sent or received. The process of adding additional control information to data as it moves through each layer is called encapsulation. Encapsulation occurs in the sending device with the receiving device de-encapsulating the data.
+
+The process of encapsulation can be shown through placing a letter into an envelope. On the envelope we write the address and sender's/receiver's name, this is the control information. The sender then places the letter into the envelope encapsulating the control information and contents of the letter. The receiver then removes the letter from the envelope thus de-encapsulating the control information and contents.
+
+### OSI Layers
+
+#### The Application Layer (Layer 7)
+The application layer provides many interfaces for which a user can use to access networking services. 
+
+**Common Protocols:**
+- Hypertext Transfer Protocol (HTTP)
+- File Transfer Protocol (FTP)
+- Simple Mail Transfer Protocol (SMTP)
+
+**Possible Problems:**
+- Missing or misconfigured client or server software
+- Incompatible or deprecated commands used to communicate between client and server
+
+#### The Presentation Layer (Layer 6)
+The presentation layer handles data formatting and translation and can support data encryption/decryption. For outgoing messages the data is converted into a format specified by the application layer. For incoming messages the conversion is reversed if required by the receiving application.
+
+#### The Session Layer (Layer 5)
+The session layer handles the creation and management of sessions, ongoing communications, between multiple devices. The layer handles connection setup ahead of data transfers and session shutdowns once the session ends.
+
+The session layer also handles checkpointing and manages the mechanics of ongoing conversations such as identifying which side can transmit data when and how long for. 
+
+**Common Network Functions:**
+- Name lookup
+- User login
+- User logoff
+
+#### The Transport Layer (Layer 4)
+The transport layer manages the transfer of data from one application to another across a network. It does this by first breaking down the data into smaller chunks called segments. Segmenting is important because every network technology has a maximum frame size, called the Maximum Transmission Unit (MTU), and the data sent must not exceed this.
+
+The transport layer also handles flow control and acknowledgements to ensure reliability as well as handling the re-sequencing of segments into the original data on the receipt.
+
+![Figure 7-5: The transport layer breaks data into segments](assets/transport-layer-breakdown-diagram.png)
+
+#### The Network Layer (Layer 3)
+The network layer performs many tasks such as
+- Logical addressing
+- Mapping logical network addresses (IP addresses) into physical addresses.
+- Routing e.g. selects the best path
+
+**Common Protocols:**
+- Internet protocol (IP)
+- Address Resolution Protocol (ARP)
+- Internet Control Message Protocol (ICMP)
+
+**Possible Problems:**
+- Incorrect IP addresses or subnet masks
+- Incorrect router configuration
+- Router operation errors
+
+#### The Data Link Layer (Layer 2)
+The data link layer is an intermediate layer between the network and physical layers which defines how computers access the network medium. The data link layer works with frames consisting of both a header and a trailer with the trailer component being labeled as a frame check sequence (FCS) which contains a Cyclic Redundancy Check (CRC) code. CRC is an error detecting code which is commonly used in network communications. NICs and switches operate at this layer.
+
+**Possible Problems:**
+- Collisions
+- Invalid frames
+
+#### The Physical Layer (Layer 1)
+The physical layer deals with the incoming and outgoing messages. It converts bits into signals for outgoing messages and signals into bits for incoming messages. The physical layer also handles encoding with most components at this layer being repeaters and hubs.
+
+**Possible Problems:**
+- Incorrect media termination
+- Electromagnetic interference or noise which scrambles a signal
+- NICs and hubs can bne misconfigured or malfunctioning
