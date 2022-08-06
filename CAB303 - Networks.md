@@ -9,7 +9,7 @@ Dr Vicky Liu | Notes for CAB432 at the Queensland University of Technology
 	<li><a href="#CAB303">CAB303: Networks</a></li>
 	<ul>
 		<li><a href="#week1">Week 1</a>: Introduction</li>
-		<li><a href="#week2">Week 2</a>: </li>
+		<li><a href="#week2">Week 2</a>: Network Media, Ethernet, and Wi-Fi</li>
 		<li><a href="#week3">Week 3</a>: </li>
 		<li><a href="#week4">Week 4</a>: </li>
 		<li><a href="#week5">Week 5</a>: </li>
@@ -216,3 +216,316 @@ The physical layer deals with the incoming and outgoing messages. It converts bi
 - Incorrect media termination
 - Electromagnetic interference or noise which scrambles a signal
 - NICs and hubs can bne misconfigured or malfunctioning
+
+<br />
+
+<h2 id="week2">Week 2: Network Media, Ethernet, and Wi-Fi</h2>
+
+### Network Media
+- There are two major categories of network media: wired and wireless.
+- There are two broad categories for cables: copper wire and fibre optic
+
+The main differences between these two types are:
+- Composition of signals, whether they use electricity or light
+- Speed at which the signals can be sent
+- Distance the signals can effectively travel
+
+### Criteria for Choosing Network Media
+
+- Bandwidth
+  - How much data will need to be transmitted on the required network link?
+  - What is the typical speed we would expect for our transfer rate to be useable?
+  - How many users will be using the network at any given time?
+- Distance
+  - How far do we need a segment of the network to go?
+  - What will be the maximum length of cable between two network devices?
+  - Each cable type can only transport data so far before the connection begins to weaken
+- Interference
+  - Wireless connections can be disrupted by environmental obstacles or other devices running on similar bandwidths:
+    - Computers, refrigerators, fans, lighting fixtures, or any other motorised devices
+    - Weather conditions such as lightning and fog can effect wireless signal integrity 
+  - Wired connections can be disrupted by other equipment producing electromagnetic interference:
+    - 802.11b/g use an RF range of 2.4GHz
+    - Devices sharing a channel can cause noise which in turn weakens other signals
+    - Electromagnetic interference (EMI)
+    - Radio Frequency Interference (RFI)
+  - The density of objects can create interference or connection issues:
+    - Concrete/steel walls are difficult for a signal to pass through
+- Ease of Installation
+  - How easy is the technology to install in the given location?
+  - Need to consider the environment the connection is going to be in
+- Total Cost 
+  - The total cost of the installation, network media, and ongoing maintenance
+- Mobility
+  - Will the devices using the connection be moved around a lot or be fixed in-place?
+- Security
+  - How secure is the network media?
+  - What data is being sent over the connection, is it sensitive?
+  - What will happen if the data being sent is intercepted?
+  - Copper wire is susceptible to electronic eavesdropping
+  - Fiber-optic media carries light signals and therefor is not easily susceptible to interference or eavesdropping
+
+  ### Bandwidth
+  The network bandwidth is the total amount of data that can be carried from one point to another for any given time period (generally a second). This amount is expressed using bits per second (bps) with speeds generally measured in the millions of bits per second, megabits per second (Mbps), or billions of bits per second, gigabits per second (Gbps).
+
+  <br />
+
+  **Rates:**
+  - 1 Mbps = 0.125 MB/s (Megabytes per second)
+  - 100 Mbps = 12.5 MB/s
+  - 1 Gbps = 125 MB/s
+
+### Types of Cables
+
+#### Coaxial Cable
+Coaxial cables, or coax cables, were once the predominant form of network cabling. This was because it was relatively inexpensive and was easy to install while still providing a decent connection. Coaxial cables started to be phased out in the early 1990's but are still used today primarily in connecting cable modems to wall outlets installed by TV/internet providers.
+
+#### Twisted-Pair Cable
+These cables are used in most local area network connections. There are two types of twister-pair cables:
+- Unshielded Twisted-Pair (UTP)
+  - This are the most commonly used one out of the pair
+  - Cheaper to use
+  - More flexible than the shielded version
+- Shielded Twisted-Pair (STP)
+  - Cables are shielded to help stop interference from electromagnetic noise
+  - More expensive
+
+Twisted pair cabling is classified by categories with twisted pair cables currently being in category 1 through to category 8 although categories 1, 2 and 4 are nearly obsolete. Categories 5e, 6, and 7 UTP cabling is the most popular type of UTP used now days.
+
+![A summary of the characteristics of twister pair wires](./assets/twisted-pair-wiring-categories.png)
+
+The twists in the wires are necessary to improve their resistance to crosstalk from other wires and EMI from outside sources. Shielding can additionally be layed on to eliminate more interference.
+
+Twister-pair cables use RJ-45 connectors to connect to computers, hubs, switches and RJ-45 wall jacks. To put RJ-45 plugs on the end of twisted-pair cable the wires are punched down into terminal blocks on a jack or patch panel.
+
+Some common tools used in this process are:
+- Wire cutters
+- Crimping tool
+- Cable tester
+- Punchdown tool
+- Cable stripper
+- RJ-45 plugs/jacks
+
+It's important when making a cable or terminating a cable at a jack or path panel that the colour wires are arranged in the correct order. There are two standards from the Telecommunications Industry Association (TIA)/Electronic Industries Alliance (EIA):
+- T-568A
+- T-568B
+
+![T-568A and T-568B wiring scheme comparison](./assets/T568A-and-T568B-wiring-schemes.jpg)
+
+#### Fiber-Optic Cable
+Fiber-optic cables transmit pulses of light instead of electrical signals. These cables are composed of a cylinder of glass fiber called the core encased in a concentric layer of glass called the cladding. Finally the fiber is jacketed in a thin transparent plastic material called the buffer.
+
+Information is sent in a beam of light bouncing down the glass or plastic pipe. These cables provide a high data capacity over long distances immune to electrical interference and eavesdropping. As expected however, there are higher installation and maintenance costs tied to these cables:
+- They are more difficult and time consuming to install
+- The connectors and test equipment required are relatively more expensive than the copper substitutes
+- Birds typically peck at the fiber cable jackets to use as bits of nesting material
+- Beavers and mice use exposed fiber cables to sharpen their teeth
+- Ants like to eat the plastic shielding
+- Sharks have been known to damage fiber cabling when laid underwater
+
+There are two major types of fiber-optic cables:
+1. Single-mode fiber (SMF):
+    - Includes a single, small-diameter fiber at the core (8 microns)
+    - Generally uses a laser light source
+    - Spans the longest distance of the two
+    - Generally used in higher-bandwidth applications
+2. Multi-mode fiber (MMF)
+    - Uses a larger diameter fiber at the core (50 and 62.5 microns)
+    - Costs less that SMF
+    - Uses an LED for its light source
+    - Spans shorter distances
+
+#### Serial Communications
+A serial link is a point-to-point link between two devices where bits are transmitted sequentially over a single channel. In theory, transferring bits in parallel is faster however, this method suffers from problems with synchronisation and higher costs.
+
+The original serial standard, RS-232, was introduced in the 1960s and is now mostly replaced by USB.
+
+### Straight-Through vs Crossover Cables
+Standard path cables are considered straight-through cables as the same wiring standard is used on both ends of the cable. Crossover cables on the other hand use the T-568A standard on one side of the cable and the T-568B standard on the other side.
+
+Crossover cables cross the transmit and receive wires so that the transmit on one end connects to the receive on the other. This is usually needed when two devices of the same type need to be connected to one another.
+
+The need for crossover cables has been eliminated in todays time with advancements in equipment. G/Ethernet comes with automatic medium-dependant interface crossover (Auto-MDIX) detecting whether a crossover or straight-though cable is needed and automatically configuring the network interface card accordingly. There are however, still cases in which crossover cables are still needed when connecting devices of the same type together.
+
+![Straight-Through vs Crossover Cables Diagram](./assets/straightthrough-vs-crossover-diagram.png)
+
+### DTE vs DCE Devices
+Devices that communicate over a serial interface are divided into two types:
+1. Data Terminal Equipment (DTE)
+    - An end instrument that is used to convert user information into signals or re-convert received signals.
+2. Data Communications Equipment (DCE)
+    - Typically, a modem or other piece of data communications equipment
+
+When a connection between two DTE devices is needed without a modem, a special type of cable called a null modem is required. Generally, DCE devices provide the clock rate while the DTE device synchronises with that provided clock rate.
+
+### Benefits of Wireless Connections
+- Wireless connections create a temporary connection to wired connections
+- Establishes backup or contingency connectivity for existing wired networks
+- Extends a networks span beyond the reach of wire-based or fiber-optic cabling. This is especially useful in older buildings where rewiring may be too expensive
+- Wireless allows businesses to provide customers with access to the internet without the need for them to hook any wires up
+- Allows users to move around the office without the restrictions of moving wires or physical connections
+
+### Wireless LAN Components
+There are many components that help provide a device with wireless LAN capabilities:
+- The network interface attaches to an antenna and an emitter instead of a cable
+- A wireless access point (AP)
+  - This is a device which has an antenna and transmitter to send and receive wireless traffic
+  - Has ports to connect to the wired side of the network
+  - Shuttles traffic back and forth between a networks wired and wireless sides
+  - Most small business and home networks use a wireless router to do this. A wireless router is a device which combines the functions of an AP, a switch and a router all in one.
+
+### Wireless vs Wired Networking
+- Speed
+  - Wired ethernet is faster than wireless however Wi-Fi has become faster over the recent years
+- Stability
+  - Wireless is more susceptible to environmental factors as radio waves can be blocked by walls and floors and can interfere with microwaves, cordless phones and more
+- Mobility, installation and convenience
+  - Wi-Fi allows for greater mobility of devices as they are not restricted by cabling
+- Security
+  - Wireless transmissions can be intercepted easier than wired transmissions
+
+### Media Access Controller (MAC) Addresses
+MAC addresses are unique 48-bit addresses expresses in 12 hexadecimal digits that are stored in ROM on the NIC. This 48-bit address is made up of two 24-bit numbers with one half referred as the manufacturer ID (OUI) and the other being the device's unique serial number assigned by the manufacturer. 
+
+The broadcast MAC address is ff-ff-ff-ff-ff-ff.
+
+### Wireless NICs
+Wireless NICs must be chosen according to the type of wireless AP being used. Typically this would either be 802.11ac, 802.11ax, 802.11ax-2021 or 802.11 a/b/g/n where each letter refers to the wireless network standard the device supports.
+
+Wireless NICs connect to a network using a service set identifier (SSID) which is the name assigned to the wireless network. Depending on the networks security configuration, a security key or username and password may need to be entered for access.
+
+An NIC has many functions depending on what connection is being processed.
+
+For incoming messages the NIC will:
+- Receive bit signals and assemble them into frames
+- Verify the destination address
+- Remove the frame header and sends the resulting packet to the network protocol
+
+For outgoing messages the NIC will:
+- Receive packets from the network layer
+- Create frames by adding MAC addresses and error checking
+- Convert frames into bit signals suitable for the medium and transmit them
+
+### Ethernet
+Ethernet is a wired connection used in LAN, MAN and WAN networks. It was introduced in 1980 and standardised in 1983 as IEEE 802.3. The protocol has evolved and improved over time with the system now having three main speeds:
+- 10Mbps
+- 100Mbps
+- 1000Mbps
+
+Ethernet can support 10Mbps all the way to 10Gbps with most NICs/switches operating at 10/100/1000Mbps.
+
+### Ethernet Media Access
+Media access method is a set of rules governing how and when that medium can be accessed for transmission. Ethernet uses Carrier Sense Multiple Access with Collision Detection (CSMA/CD):
+- Carrier Sense: The connection must listen and hear silence before sending data
+- Multiple Access: If two or more stations hear silence, multiple stations are allowed to transmit data at the same time
+- Collision Detection: If two or more stations transmit at the same time and a collision occurs and is detected by the NIC, all stations must retransmit the sent data
+
+Ethernet handles errors using the best-effort delivery system, you hope the data gets to the destination but there is no acknowledgement either way. It's the job of the network protocols and applications to ensure the delivery of data. 
+
+Ethernet will detect damaged frames by using the error-checking code in the frames trailer, this is called a Cyclic Redundancy Check (CRC). Ethernet can also use CRC to detect if any data has been changed during transmission. If a frame is detected as damaged, it is discarded with no notification.
+
+### Ethernet Addressing
+In ethernet, each station has a physical MAC address. Incoming frames must match the NIC's address or broadcast address and, once processed by the NIC, the incoming frames are sent to the network protocol for further processing.
+
+### Ethernet Frames
+Ethernet has four different frame types depending on the protocol being used to send the frame.
+
+The ethernet II frame type is used by TCP/IP where each frame must be between 64-1518 bytes. Each frame consists of:
+- Destination MAC
+- Source MAC
+- Type
+- Data
+- FCS
+
+### Ethernet Standards
+Ethernet standards are expressed through an XbaseY format where x designates the speed of transmission and Y specifies the type of media (T = twisted-pair, FX = fiber optic).
+
+#### 10BaseT (outdated)
+- Uses two of the four wire pairs
+- Runs over Category 3 or higher UTP cabling
+- Is highly susceptible to collisions and is now obsolete
+
+#### 100BaseTX
+100BaseTX is a common variety of Ethernet.
+- Uses two of the four wire pairs
+- Runs over Category 5 or higher UTP
+- There are two types of 100BaseTX hubs
+- Switches can be used to interconnect multiple hubs
+
+#### 100BaseFX
+100BaseFX is the fiber optic standard of Ethernet.
+- Runs over two strands of fiber optic cabling
+- Is typically used as the backbone cabling between switches
+- Used to connect clients or servers when there is a need for the transmission to be immune to noise and eavesdropping
+
+#### 1000BaseT Ethernet
+1000BaseT Ethernet, also know as Gigabit Ethernet, runs over Category 5 or higher UTP and uses all four wire pairs.
+
+#### 10GBaseT Ethernet
+- Runs over four pairs of Category 6A or 7 UTP
+- Only operates in full-duplex mode
+- Is considered an expensive option even today
+- Very useful for network servers as it allows them to keep up with desktop systems which typically operate at 1Gbps
+
+#### 100BaseT4
+- Uses all four pairs of wires in UTP Category 3 cable
+- Is now considered obsolete
+
+#### 1000BaseLX
+- Uses fiber-optic media
+- The "L" stands for "Long wavelength" laser
+- Supports a maximum cable segment length of 5000 meters
+
+#### 1000BaseSX
+- Uses fiber-optic media
+- The "S" stands for "Short wavelength" laser
+- Cannot cover as much distance as long-wave lasers but is cheaper in comparison
+
+#### 1000BaseCX
+- Uses specially shielded, balanced, copper jumper cables
+- Is also called "Twinax" or "Short-haul" copper cables
+
+#### 10 Gigabit Ethernet IEEE 802.3ae
+- Defined to only run on fiber-optic cabling
+- Specifies a maximum distance of 40km
+- This standard is primarily used for network backbones
+- Has many varieties such as:
+  - 10GBaseSR, 10GBaseLR, 10GBaseER, 10GBaseSW, 10GBaseLW, and 10GBaseEW
+
+#### 40 Gigabit and 100 Gigabit Ethernet
+- Fiber-optic cabling is the primary medium although there are provisions to use special copper assemblies over short distances.
+
+### Wi-Fi
+802.11 wireless networking standard, also called Wireless Fidelity (Wi-Fi) is essentially an extension to ethernet using airwaves instead of cabling. Wi-Fi can operate in one of two modes:
+- Infrastructure:
+  - The most common mode of Wi-Fi
+  - Uses a central access point (AP)
+- Ad hoc:
+  - Uses no central device with data traveling from device to device like a bus
+  - This is sometimes referred to as "Peer-to-Peer" mode
+
+Wi-Fi can operate at 2.4Ghz and 5.0GHz frequencies with:
+- 2.4GHz actually being 2.412 through to 2.484 divided into 14 channels spaced 5MHz apart
+- 5.0GHz actually being 4.915 through to 5.825 divided into 42 channels of 10, 20, 40, 80, and 160MHz each
+
+![Wi-Fi - IEEE802.11 Standards](./assets/ieee802.11-standards.png)
+
+### Wi-Fi Access Methods and Operation
+Unfortunately with Wi-Fi, a sending station cannot hear if another station has begun transmitting or not so it is unable to use CSMA/CD. Instead Wi-Fi devices use Carrier Sense Multiple Access with Collision Avoidance (CSMA/CA). This can optionally be used with request-to-send/clear-to-send (RTS/CTS) packets and acknowledgements.
+
+CSMA/CA Protocol Steps:
+1. Sender node (A) has some data to transmit
+2. (A) checks if the media is free or not
+  - Optionally, the sending not can transmit an RTS (Request to Send) packet to the access point
+3. The sending node waits until all nodes have had time to receive the jam signal
+4. Access point replies with a CTS (Clear to Send) packet
+5. During transmission, the node monitors the media for an RTS signal from other surrounding nodes that may already be mid-transmission. If an RTS signal is received, it stops transmitting and retries after a random delay.
+
+### Wi-Fi Security
+Due to the fact that Wi-Fi can transmit data hundreds of feet away there is the fear that this data can be intercepted without you ever knowing. Wi-Fi should be protected by an encryption protocol that makes this data difficult to intercept and interpret. 
+
+There are many encryption protocols with the main three being:
+- Wired equivalent privacy (WEP)
+- Wi-Fi protected access (WPA) as well as WPA2 and WPA3
+
+However, not all devices support all three protocols. Older devices might only support WEP and/or WPA.
