@@ -10,7 +10,7 @@ Dr Vicky Liu | Notes for CAB432 at the Queensland University of Technology
 	<ul>
 		<li><a href="#week1">Week 1</a>: Introduction</li>
 		<li><a href="#week2">Week 2</a>: Network Media, Ethernet, and Wi-Fi</li>
-		<li><a href="#week3">Week 3</a>: </li>
+		<li><a href="#week3">Week 3</a>: Internet Protocol (IP) and IPv4 Addressing</li>
 		<li><a href="#week4">Week 4</a>: </li>
 		<li><a href="#week5">Week 5</a>: </li>
 		<li><a href="#week6">Week 6</a>: </li>
@@ -68,7 +68,9 @@ During 1960 to 1989, IMP was the primary packet switching node used to interconn
 Packets, also known by many names such as frames, bits, or segments, are small collections of data that are sent across a network. These collections contain information such as a source, destination IP address, data and more.
 
 ### Frames
-Frames are packets that contain a source and destination MAC address. The process of adding an IP address and MAC address to a chunk of data is called encapsulation. Information added to the front of the data chunk is called a header while information added to the end is called a trailer.
+Frames are packets that contain both a physical (MAC) and logical (IP) source and a destination address. The process of adding an IP address and MAC address to a chunk of data is called encapsulation. Information added to the front of the data chunk is called a header while information added to the end is called a trailer. 
+
+When a packet is ready to be sent to the network access layer, the destinations MAC address must first be retrieved before the frames header can be created. TCP/IP retrieves this MAC address using the Address Resolution Protocol (ARP).
 
 ### Bits
 A bit is a binary value typically represented by a 0 and 1 corresponding to an off and on electrical signal. Bits are the smallest incremental piece of data a computer can support.
@@ -187,15 +189,22 @@ The transport layer also handles flow control and acknowledgements to ensure rel
 ![Figure 7-5: The transport layer breaks data into segments](assets/transport-layer-breakdown-diagram.png)
 
 #### The Network Layer (Layer 3)
+The network layer protocols main focus is on delivering packets in the most efficient way. It relies on protocols from the transport and application layers to provide reliability features as the network layer is considered a connection-less protocol. The IP protocol operates at this level with it being the heart of the TCP/IP protocol suite.
+
+The network layer determines the best route a packet should take to get from network to network until it reaches its destination. Routers work predominately at the network layer with their job being to select the best path to the packets destination. 
+
 The network layer performs many tasks such as
+- Defining and verifying IP addresses
 - Logical addressing
-- Mapping logical network addresses (IP addresses) into physical addresses.
-- Routing e.g. selects the best path
+- Mapping logical network addresses (IP addresses) into physical addresses (MAC addresses).
+- Routing packets through an internetwork e.g. selects the best path
 
 **Common Protocols:**
 - Internet protocol (IP)
 - Address Resolution Protocol (ARP)
 - Internet Control Message Protocol (ICMP)
+- IPv4 and IPv6
+- IPsec
 
 **Possible Problems:**
 - Incorrect IP addresses or subnet masks
@@ -529,3 +538,65 @@ There are many encryption protocols with the main three being:
 - Wi-Fi protected access (WPA) as well as WPA2 and WPA3
 
 However, not all devices support all three protocols. Older devices might only support WEP and/or WPA.
+
+<br />
+
+<h2 id="week3">Week 3: Internet Protocol (IP) and IPv4 Addressing</h2>
+* Note: Many of the notes taken for this week have been appended to their appropriate sections found earlier in this guide.
+
+### Defining and Verifying IP Addresses
+Once a device connects to the internet it will be assigned an IP address. This IP address is made up of two parts:
+1. A network ID
+2. A host ID
+
+An IP address has two main purposes:
+1. To identify a network device at the Internetwork layer
+2. To identify the network on which a device resides 
+
+When a device receives an IP packet, it first compares the destination IP address to its own. If the destination IP matches or is a broadcast, the packet is then processed. If however it does not match then the packet is discarded.
+
+### IPv4 and IPv6
+IPv4 and IPv6 are both protocols found at the network layer with IPv4 being the most common one currently (2022). IPv4 was created in 1977 and has a physical limitation of 4.3 billion IP address. IPv6 was created in the 1990s yet has not seen widespread adoption. It is however, slowly being used more often with more providers offering IPv6 support.
+
+**IPv4 Header Breakdown:**
+![IPv4 Header Breakdown Diagram](./assets/ipv4-header-breakdown.png)
+
+- Version
+  - Indicates which version of the IP protocol is being used: IPv4 or IPv6.
+- Header Length
+  - Denotes the length of the IP header.
+- Differentiated Services
+  - Specifies a packets priority and informs routers the level of priority that should be applied when processing the packet.
+- Total Length
+  - Denotes the total length of the IP packet. This includes the header and data.
+- Identification (16 bits)
+  - A unique identifier value for the packet. If a packet is fragmented then the same Id value is used in each fragment.
+- Flags (3 bits but the first is not used)
+  - Specifies whether fragmentation is allowed or not
+  - Indicates whether the packet has been fragmented or not
+    - If fragmented, also indicated if it is the last in the fragment
+  - 'D' means 'Do not fragment bit' while 'M' means 'More fragment bit'
+- Fragmentation Offset (13 bits)
+  - Indicates how to reconstruct the fragmented packets.
+  - The first fragment has an offset of zero with the rest being offset in units of 8 bytes measured from the original datagram.
+  - Only the first byte number of each fragmented packet is recorded.
+- Time to Live (TTL)
+  - Denotes the remaining lifetime of the packet
+- Protocol
+  - Indicates which transport layer protocol received the packet: TCP or UDP.
+- Header Checksum
+  - Allows the receiving device to calculate if the IP header has been tampered or corrupted during transmission.
+- Source IP Address
+  - The IP address of the source node.
+- Destination IP Address
+  - The IP address of the destination node.
+
+### IP Fragmentation
+IP fragmentation is a required for most data transfers. This is due to the fact that every network has a unique limit e.g. the maximum transmission unit (MTU) for the size of datagrams that can be processed at any given time.
+
+If a datagram that's being sent it too large for the receiving servers MTU, then the datagram must be fragmented into smaller sizes in order to be successfully transmit.
+
+IPv4 fragmentation comes with its downsides however:
+- Fragmentation requires much more overhead for the receiving device due to the need to allocate memory for the arriving fragments and the need to reassemble the fragments.
+- If a single fragment of an IPv4 datagram is dropped, the entire original datagram must be resent
+
