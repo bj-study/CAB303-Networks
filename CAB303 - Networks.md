@@ -11,8 +11,8 @@ Dr Vicky Liu | Notes for CAB432 at the Queensland University of Technology
 		<li><a href="#week1">Week 1</a>: Introduction</li>
 		<li><a href="#week2">Week 2</a>: Network Media, Ethernet, and Wi-Fi</li>
 		<li><a href="#week3">Week 3</a>: Internet Protocol (IP) and IPv4 Addressing</li>
-		<li><a href="#week4">Week 4</a>: </li>
-		<li><a href="#week5">Week 5</a>: </li>
+		<li><a href="#week4">Week 4</a>: Subnetting and Supernetting</li>
+		<li><a href="#week5">Week 5</a>: Routing</li>
 		<li><a href="#week6">Week 6</a>: </li>
 		<li><a href="#week7">Week 7</a>: </li>
 		<li><a href="#week8">Week 8</a>: </li>
@@ -600,3 +600,191 @@ IPv4 fragmentation comes with its downsides however:
 - Fragmentation requires much more overhead for the receiving device due to the need to allocate memory for the arriving fragments and the need to reassemble the fragments.
 - If a single fragment of an IPv4 datagram is dropped, the entire original datagram must be resent
 
+<br />
+
+<h2 id="week4">Week 4: Subnetting and Supernetting</h2>
+
+### Subnetting
+Subnetting is the act of splitting up an address range into a group of smaller networks. We do this so at the end we have multiple smaller sub-networks which allows us the benefit of:
+- Reduced congestion by allowing fewer devices into the subnet
+- Dividing a network into logical subnets
+- Allowing multiple supported network technologies
+- Supporting WAN by allowing geographical separated LANs to use a single network ID
+
+![Example of subnetting](./assets/subnetting-example.png)
+**Figure 1: The network is seen externally as `193.2.1.0`.**
+
+With subnetting we may sometimes end up with a large number of IP addresses that need to be managed. To combat this we can break the host ID portion of the address down into a subnet ID and host ID. For example, a subnet mask of `255.255.255.0` applied to a class B address would be broken down such that the host ID, usually consisting of 16-bits, would now consist of an 8-bit subnet ID and an 8-bit subnet host ID.
+
+When we subnet we change the structure from a two level address to a three level address. It's important to note that external networks do not know about the subnet/host ID details, they only see one complete network.
+
+When deciding on how to derive a subnet mask we must first:
+- Decide how many subnets are needed
+- Decide how many bits are needed to meet/exceed the number of required subnets. We can use the formula $2^n$ where $n$ represents the number of bits that must be added to the started subnet mask.
+- Borrow bits from the top of the host portion of the address down
+- Ensure that there exist enough host bits to assign to computers on each subnet, calculated using $2^n - 2$ where $n$ represents the number of host bits left in the host ID
+
+It's important to note that when subnetting there are two main rules we need to follow:
+1. Host bits cannot be all zero's, this is the subnet ID
+2. Host bits cannot be all one's, this is the broadcast address
+
+### Calculating a Subnet Mask
+![Calculating subnets Diagram 1: Steps 1-3](./assets/calculating-subnets-1.png)
+
+*Note: Diagram taken from QUT slides.
+
+### Variable Length Subnetting (VLSM)
+VLSM is a way of subnetting a subnet to reduce the waste of IP addresses by borrowing an extra bit from the host bits. Suppose we have a class C address `212.5.5.0` and we require 3 subnets with 60 hosts and 2 subnets with 30 hosts. We need 5 subnets in our example but due to a $2^n$ limitation, our only options would be 4 or 8 subnets. Using VLSM we can subnet our address into 4 subnets of 60 hosts and then subnet one of the subnets into 2 more subnets consisting of 30 hosts.
+
+### Supernetting
+Supernetting, or network summarisation, is the act of combining a group of continuous subnets into a single network by borrowing bits from the network portion and putting them into the host portion. It's used for route aggregation as a way of reducing the size of routing tables. There are a few benefits to supernetting such as:
+- Minimizing latency in a complex network structure
+- Reducing the overhead for the routing process
+- Improving network stability by reducing unnecessary routing updates
+- Reducing processor workloads, memory requirements, and bandwidth demand
+
+For example, we may have two subnets, `193.2.1.0/25` and `193.2.1.128/25`. We can then take these two subnets and supernet them back into a single network, `192.2.1.0/24`.
+
+### Calculating a Supernet
+Let's say we have 4 continuous class C addresses that we want to supernet. $\log_2 4 = 2$ shows that we need to borrow 2 bits from the network portion. This means our mask would become `11111111.11111111.11111100.00000000` or `255.255.252.0` and the possible addresses we have now are:
+- `212.5.4.0` = `11010100.00000101.00000100.00000000`
+- `212.5.5.0` = `11010100.00000101.00000101.00000000`
+- `212.5.6.0` = `11010100.00000101.00000110.00000000`
+- `212.5.7.0` = `11010100.00000101.00000111.00000000`
+
+### Classless Interdomain Routing (CIDR)
+
+<br />
+
+<h2 id="week5">Week 5: Routing</h2>
+
+### Routing
+In terms of networking, routing is the process of forwarding packets of information from one place (source) to another (destination). This process is usually performed by a dedicated device called a router and involves selecting the best route for the packet to reach the final destination.
+
+Routing is a major fundamental feature of the internet as it enables packets of information to jump from one device to another until it reaches its final destination. Each intermediary node performs routing by passing along the packet to the next node. 
+
+### Routers
+As mentioned earlier, a router is a dedicated device that performs the routing of packets across a network. Routers operate at the network layer and connect separate logical networks to from an internetwork. In order for a router to forward packets to other networks it must have two of more interfaces, or ports.
+
+Routers are cable of being used to create complex internetworks designed with multiple paths creating fault tolerance and load sharing. We can image these complex internetworks essentially as a weighted network graph with each edge, or link, between nodes having a cost associated to them. These costs could consist of:
+- A hop count
+- A queue size cost
+- A limiting speed
+- Dollar amount for link usage
+
+All of this information is stored in something called a routing table which is used to determine the best path to forward packets.
+
+### Routing Administration
+As a routing administrator, the possible roles you will take on are:
+- Assigning each router on the network an IP address via the routers interface
+- Selecting the routing protocols that are to be used
+- Building and enabling routing tables
+- Testing and monitoring the routing of packets
+
+### Routing Process between Routers
+
+![Routing process between routers diagram](./assets/router-process-between-networks.png)
+
+- Step 1: The router de-encapsulates the layer two frame header and trailer to expose the layer three packet.
+- Step 2: The router then examines the destination IP address and uses the routing table to determine the best path.
+- Step 3: If the router finds a valid path, it encapsulates the layer three packet into a new layer 2 frame and sends it to the next hop.
+
+### Algorithm for the Routing Process
+When the router receives a packet, it first evaluates the time to live (TTL). 
+
+- If the TTL is equal to zero, then:
+  - The router will discard the packet and send an ICMP time exceeded message to the source.
+
+- If the TTL is greater than zero, then:
+  - The router will decrement the TTL by one.
+  - The router will exam the destination IP
+  - The router will use the routing table to determine the best path to the destination. If the router finds a valid path, it will encapsulate the packet into a new data link frame of the outgoing interface and send it to the next hop. If the router does not find a valid path, then the router will send an ICMP destination unreachable message and discard the packet.
+
+### Routing Table
+Routing tables are tables comprised of network addresses and interface pairs. This data tells the router which interface a packet should be forwarded to.
+
+**Types of routing table entries**:
+- Directly connected network: A network that is directly connected to one of the routers interfaces.
+- Remote network: A network that is not directly connected to the router. To reach a remote network the packet must be sent to another router connected to this network.
+- Default routes (quad-zero route): Any packet with a destination address that is not in the routing table will be sent to the default route. This is expressed as `0.0.0.0/0`.
+
+**Routing table entries generally consist of**:
+- A destination network: Generally expressed in CIDR notation such as `172.16.0.0/16`
+- The next available hop: Indicated by an interface name or the address of the next router in the path
+- The metric: A numerical value telling the router how "far away" the destination network (cost) is as well as the total number of routers a packet must travel through (hop count)
+- The Timestamp: Indicates how long it has been since the routing protocol updated the dynamic route
+
+### Static Routing
+Static routing is when a network administrator manually configures, creates and updates the routing table. This is an effective method for configuring and managing a routing table for smaller and predictable networks. However, this method does not scale well for complex, large networks or networks that dynamically change.
+
+**Advantages:**
+- Easy to implement and maintain in a small network
+- Very little overhead
+  - No need for a routing algorithm
+  - No extra resources
+
+**Disadvantages:**
+- Not easy to implement in a large network
+- If a link fails, a static route cannot reroute traffic, it will need to be manually fixed
+
+**Static routing is preferred when:**
+- The network consists of only a few routes
+- The ISP represents the only exit point to the Internet
+- A network is configured in a hub-and-spoke topology
+- Access a single default route
+
+### Dynamic Routing
+Dynamic routing is when the routers themselves communicate with each other exchanging routing information. This process is done in three main stages:
+1. Initialisation
+2. Sharing
+3. Updating
+
+Before the router can process and calculate the received routing information, a network administrator must define which routes are to be advertised on a router. 
+
+Convergence is achieved when a set of routers have the same topological information from each other.
+
+**Advantages:**
+- Suitable in all topologies where mutliple routers are required
+- Automatically adapts topology to reroute traffic if possible
+- Ability to sense and recover from network faults. If a router goes down, other routers can detect the fault and update the routing table to reflect that.
+
+**Disadvantages:**
+- Can be much more complex to implement
+- Requires additional resources such as CPU, memory and link bandwidth for routing updates
+
+**Dynamic routing is preferred when:**
+- The network is of medium-large sizing or complex
+- There is automatic updating of routing table entries facilitated by a routing protocol
+
+### Dynamic Routing Categories
+
+![Dynamic routing diagram](./assets/dynamic-routing-protocol.png)
+
+**Interior Gateway Routing Protocols (IGP)**
+Used for routing inside an autonomous system (AS) e.g. RIP, EIGRP, OSPF
+
+**Exterior Routing Protocols (EGP)**
+Used for routing between autonomous systems (AS) e.g. BGP
+
+### Dynamic Routing Algorithms
+
+#### Distance Vector Algorithm 
+Based on the Bellman Ford algorithm, the distance vector algorithm is a dynamic routing algorithm where:
+- On boot, a router will initialise its routing table containing an entry for each directly connected network.
+- Each router will then periodically share its knowledge about the entire routing table to all its interfaces e.g. "I can reach destination x at distance y via z".
+
+**Disadvantages:**
+- Performance poor in large networks
+
+#### Link State Algorithm
+Based on the Dijkstra's Least-Cost algorithm, the link state algorithm is a dynamic routing algorithm where the algorithm finds every possible path between two locations and in doing so the least cost path is found. It does this by having each router generate information about only its direct connected links, building adjacencies with neighbouring routers. 
+
+Link state advertisements (LSAs) are exchanged throughout the network in order to update routing tables. 
+
+**Advantages:**
+- Routers don't periodically send out their routing table. Updates are broadcast only on startup and when a link state changes.
+- Low network overhead and convergence time
+- Ability to scale to large networks
+
+**Disadvantages:**
+- More complex and difficult configuration
