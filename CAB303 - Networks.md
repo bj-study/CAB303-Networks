@@ -14,7 +14,7 @@ Dr Vicky Liu | Notes for CAB432 at the Queensland University of Technology
 		<li><a href="#week4">Week 4</a>: Subnetting and Supernetting</li>
 		<li><a href="#week5">Week 5</a>: Routing</li>
 		<li><a href="#week6">Week 6</a>: TCP/IP Protocols and Architecture</li>
-		<li><a href="#week7">Week 7</a>: </li>
+		<li><a href="#week7">Week 7</a>: Application-layer protocols</li>
 		<li><a href="#week8">Week 8</a>: </li>
 		<li><a href="#week9">Week 9</a>: </li>
 		<li><a href="#week10">Week 10</a>: </li>
@@ -986,4 +986,148 @@ This method can be done either top-down or bottom-up:
 - Routing interfaces:
   - Interfaces are disabled by default
   - Clock rate on DCE interfaces must be set
- 
+
+<br />
+
+<h2 id="week7">Week 7: Application-layer protocols</h2> 
+
+### DNS
+DNS is a name-to-address resolution protocol designed to convert human readable names into IP address on a network. DNS keeps a list of computer names and their IP addresses allowing the user to access a network by name rather than by IP address.
+
+For example, a user can enter `www.google.com` into their browser. The DNS client service will then contact the DNS server specified in the network configuration and request the IP address of `www.google.com`. The DNS server will then return the IP address of `www.google.com` to the DNS client service which will then use the IP address to access the website.
+
+DNS is a hierarchical system with the root DNS server at the top and the TLD DNS servers at the bottom. The root DNS server contains all top-level domains of the internet.
+
+![DNS Hierarchy Diagram](./assets/dns-hierarchy.png)
+
+Second-level domains are usually the name of a company or institution. The subdomain level is optional and can consist of names separated by a period. The host level represents individual computers hosting network services. For example, `www.qut.edu.au` has the following hierarchy:
+- 'au' is the top-level domain
+- 'edu' is the second-level domain
+- 'qut' is the subdomain domain
+- 'www' is the hostname
+
+### DNS Server
+DNS servers are composed of the following:
+- DNS zones: A database containing all primary hostnames and their corresponding IP addresses.
+- Resource records: The unit of information entry in a DNS zone.
+- Cache: A temporary database containing all hostnames and their corresponding IP addresses that have been recently queried.
+- Root hints: A list of all IP addresses of internal root servers.
+- DNS Server service: A service that runs in the background listening for DNS queries on UDP port 53.
+
+### DNS Client
+The DNS client, also referred to as the resolver, is responsible for communicating with the DNS server to resolve hostnames to IP addresses.
+
+### Authoritative and Non-Authoritative Answers
+An authoritative answer occurs when the DNS server hosting the DNS record responds to the DNS client. A non-authoritative answer occurs when the DNS server provides answers that are not from its zone file.
+
+### Iterative and Recursive Queries
+A recursive query is a query that demands a resolution or answer. The queried DNS server must provide the information requested by the resolver. An iterative query is a query that does not demand a resolution or answer. The queried DNS server will only provide the information if it has it in its cache.
+
+### Web Client 
+The web client is the software that the user uses to access the web. This can be a web browser, a web crawler, or a web proxy. The web client sends HTTP requests to the web server.
+
+### Web Server 
+When queried, the web server sends HTTP responses to the web client providing web content that can be accessed through the internet.
+
+### Web Client/Server Communication
+The client first initiates contact with the web server to request a service via a HTTP request. This is usually done by entering a URL into a web client such as a web browser.
+
+The following steps then occur:
+1. The browser first connects to a DNS server to resolve the targets IP address.
+2. The DNS server replies with the corresponding IP address for the queried web server.
+3. The web browser then connects to the web server via a HTTP request with a TCP 3-way handshake.
+4. The web server receives the request and checks for the request message. Assuming the page exists, the web server will then reply with it otherwise sending a HTTP 404 response.
+5. The web browser receives the response containing the requested page, closing the connection with the DNS server.
+6. The browser then parses through the web page information and looks for other page elements needed for loading the web page.
+7. For each identified element, the browser will make an additional HTTP request to the server for the element.
+8. Once the browser has loading all the elements (images, info, scripts, etc.) it will then display the web page to the user.
+
+### HyperText Markup Language (HTML)
+HTML is a markup language used to create web pages. It is composed of tags that are used to define the structure of a web page. For example, the `<p>` tag is used to define a paragraph.
+
+For example:
+```html
+<html>
+  <head>
+    <title>My Web Page</title>
+  </head>
+  <body>
+    <h1>My Web Page</h1>
+    <p>This is my web page.</p>
+  </body>
+</html>
+```
+
+### HTTP
+The HTTP protocol was originally created as a way to transfer static web pages written in HTML. However, it is now used for general file transfer and downloading/displaying multimedia files.
+
+HTTP, by default, operates on port 80 although any port can be used. HTTP is an application layer protocol that uses TCP as its transport layer protocol. HTTP functions as a request-response protocol in the client-server computing model and can identify and locate network resources by a URI.
+
+### URL
+A URL is a unique identifier for a resource on the internet. Every object on the internet has a URL. A URL is composed of the following:
+- Service type (http, ftp, etc.)
+- Host/Domain name (`www.qut.edu.au`, `opensaurce.com`)
+- Directory or Subdirectory information (`/study`, `/utilities`)
+- File name (`example.htm`, `installer.exe`)
+
+### Email Protocols
+There are three main email protocols:
+1. Post Office Protocol v3 (POP3)
+2. Internet Message Access Protocol v4 (IMAP4)
+3. Simple Mail Transfer Protocol (SMTP)
+
+#### Post Office Protocol v3 (POP3)
+POP3 is a protocol that runs on TCP port 110 that allows a user to download emails from a remote server to a local client. A POP3 client will download an email from the mail server located on the users ISP server, then delete the email from the server. 
+
+#### Internet Message Access Protocol v4 (IMAP4)
+IMAP4 is a protocol that runs on TCP port 143 that downloads only an emails header initially, downloading the full email only when requested. IMAP4 is designed to store messages on the mail server.
+
+#### Simple Mail Transfer Protocol (SMTP)
+SMTP is a protocol that runs on TCP port 25 that allows a user to send emails to a remote server. SMTP and POP3 work in conjunction with each other to allow users to send and receive emails.
+
+### File Transfer Protocol (FTP)
+FTP is a client/server protocol running on TCP ports 20 and 21 that allows users to transfer files between a client and a server. 
+
+Port 21 is used for sending user control commands while port 20 is used for transferring the file data.
+
+An FTP site can be accessed in three main ways:
+1. Via a browser using the `ftp://`
+2. Via a FTP client such as FileZilla
+3. Via a command line interface using the `ftp` command
+
+It's very important to note that FTP is not a secure protocol due to user credentials and data being sent in plaintext.
+
+### Telnet
+Telnet is a protocol that runs on TCP port 23 that allows a user to connect to a remote server and execute commands. Much like FTP, Telnet is not a secure protocol.
+
+### Secure Shell (SSH)
+SSH is a protocol that runs on TCP port 22 that allows a user to connect to a remote server and execute commands. The difference here between SSH and Telnet is that SSH is a secure protocol as it encrypts all data sent between the client and server.
+
+### PuTTY
+PuTTY is a free and open source graphical SSH and Telnet client. It is used to connect to remote servers via SSH or Telnet through a graphical interface.
+
+### Dynamic Host Configuration Protocol (DHCP)
+DHCP is a protocol that runs on UDP port 67 and 68 that allows a client to automatically obtain an IP address, subnet mask, default gateway, and DNS server from a DHCP server.
+
+DHCP Servers listen on UDP port 67 for IP address releases while using UDP port 68 for IP address requests.
+
+A DHCP server is composed of the following:
+- IP address scope: A range of IP addresses the server leases to clients
+  - **Scope options**: Options that can be configured for the scope such as the default gateway, DNS server, subnet mask and more.
+  - **Reservations**: A list of IP addresses that are reserved for specific clients. When a clients MAC address matches an address specified by a reservation, the reserved IP is leaded to the client instead of the next available IP address in the scope.
+  - **Exclusions**: A list of IP addresses that are excluded from the scope. These addresses are not leased to clients.
+
+**DHCP Lease Process:**
+1. During the boot process, a DHCP client will broadcast a `DHCPDISCOVER` message to the network. This states that the client is looking for a DHCP server.
+2. The DHCP server will reserve an IP address for the client and make a lease offer to the client. This is done by sending a `DHCPOFFER` message to the client via unicast.
+3. The client will respond to the offer by sending a `DHCPREQUEST` message to the server via broadcast accepting the first offer to come back if multiple servers respond.
+4. The DHCP server whose offer was accepted will respond with a `DHCPACK` message to the client via unicast. This message contains the IP address lease, IP address, subnet mask, default gateway, DNS server that the client will use and more.
+5. Finally, a record of the lease is stored in a database on the DHCP server with the lease expiration date. When 50% of the lease time has elapsed, the client will attempt to renew the lease from the same server that issued the lease. If the server is unavailable, the client will wait until the lease reaches 87.5% of its expiration time before attempting to renew the lease from another server.
+
+![DHCP Lease Process Diagram](./assets/dhcp-lease-process.png)
+
+**Advantages:**
+- DHCP allows easy tracking of assigned addresses and their machine in a large network
+- Computers can easily be moved and request new IP configurations from the DHCP server
+- IP lease time can be controlled
+- IP addresses can be reusable for other computers on the network
