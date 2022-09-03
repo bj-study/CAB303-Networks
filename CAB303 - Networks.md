@@ -13,7 +13,7 @@ Dr Vicky Liu | Notes for CAB432 at the Queensland University of Technology
 		<li><a href="#week3">Week 3</a>: Internet Protocol (IP) and IPv4 Addressing</li>
 		<li><a href="#week4">Week 4</a>: Subnetting and Supernetting</li>
 		<li><a href="#week5">Week 5</a>: Routing</li>
-		<li><a href="#week6">Week 6</a>: </li>
+		<li><a href="#week6">Week 6</a>: TCP/IP Protocols and Architecture</li>
 		<li><a href="#week7">Week 7</a>: </li>
 		<li><a href="#week8">Week 8</a>: </li>
 		<li><a href="#week9">Week 9</a>: </li>
@@ -185,6 +185,10 @@ The session layer also handles checkpointing and manages the mechanics of ongoin
 The transport layer manages the transfer of data from one application to another across a network. It does this by first breaking down the data into smaller chunks called segments. Segmenting is important because every network technology has a maximum frame size, called the Maximum Transmission Unit (MTU), and the data sent must not exceed this.
 
 The transport layer also handles flow control and acknowledgements to ensure reliability as well as handling the re-sequencing of segments into the original data on the receipt.
+
+**Common Protocols**
+- Transmission Control Protocol (TCP): A connection-oriented protocol designed to provide reliable transfer of data.
+- User Datagram Protocol (UDP): A connectionless protocol designed for efficient communication of small amounts of data.
 
 ![Figure 7-5: The transport layer breaks data into segments](assets/transport-layer-breakdown-diagram.png)
 
@@ -788,3 +792,198 @@ Link state advertisements (LSAs) are exchanged throughout the network in order t
 
 **Disadvantages:**
 - More complex and difficult configuration
+
+<br />
+
+<h2 id="week6">Week 6: TCP/IP Protocols and Architecture</h2>
+
+### TCP/IP Architecture Model
+The TCP/IP model is a model consisting of four layers created by the department of defence of the US in the 1970s. The core protocols of the TCP/IP model, as suggested by the name, is TCP and IP. Both of these protocols operate in the transport and network layers of the OSI model and provide basic services to protocols in other layers.
+
+![TCP/IP Architecture Model Diagram](./assets/tcp_ip-architecture.png)
+**Figure 1: TCP/IP Architecture Model Diagram**
+
+The TCP/IP model is used to describe general guidance for the design and implementation og specific networking protocols and communication. TCP/IP specifies how data should be formatted, addressed, transmitted, routed, and received at the destination to ensure end-to-end connectivity.
+
+
+![TCP/IP vs OSI](./assets/tcp_ip-vs-osi.png)
+**Figure 2: TCP/IP vs OSI**
+
+### Transport Layer Functions
+One of the main functions of the transport layer is to ensure traffic can be separated for different applications running on the system. This is achieved using port numbers which are a way to identify specific port numbers. These port numbers are used to identify a specific process or application that the information needs to be sent to.
+
+TCP and UDP both use 16-bit port numbers that are appended into the header.
+
+Another function the transport layer provides is the ability to protect data integrity. TCP and UDP both provide checksum functions like a cyclic redundancy check (CRC) to ensure data integrity.
+
+Intermediate nodes don't recalculate the checksum in the transport layer meaning, if data corruption occurs during transmission, the final receiving host detects the checksum error and can discard the data.
+
+### Process-to-process Communication
+- IP is used for host-to-host communication
+- TCP/UDP is used for process-to-process communication
+
+A computer may be running many different programs at the same time. To ensure all these connections are unique an IP address and port number is used to establish a unique identifier on the machine. A socket is the combination of the IP address and port number generally separated by a colon e.g. `131.181.143.129:2525`, `131.181.118.220:80`.
+
+A port number ranges from 0 to 65535 however some ports are reserved for system use (such as 0). There are three types of ports:
+- Well know ports:
+  - Range: 0-1023
+  - Operating system or administrative use
+- Registered ports:
+  - Range: 1024-49151
+  - Network users or process without special privileges
+- Dynamic/Private ports:
+  - Range: 49152-65535
+  - Normally for client use
+  - No restrictions
+
+![Common ports](./assets/common-protocol-ports.png)
+**Figure 1: Common ports and their usage**
+
+### TCP Protocol
+TCP is a connection-oriented protocol, it must make a connection with the destination before data can be sent. Once the transmission is completed the connection must then be closed. 
+
+TCP offers full-duplex communication, meaning both the sender and receiver can send data at the same time.
+
+A TCP connection is established in three stages:
+1. Connection establishment with a three-way handshake
+  ![TCP three-way handshake](./assets/tcp-3-handshake-diagram.png)
+2. Data transmission
+  ![TCP data transmission](./assets/tcp-data-transfer-diagram.png)
+3. Connection termination with a four-way handshake
+  ![TCP four-way handshake](./assets/tcp-4-handshake-diagram.png)
+
+**TCP Features:**
+- Error Control: TCP provides error control to ensure data integrity:
+  - Uses Re-transmission timeout (RTO) to retransmit lost segments
+  - When TCP sends a segment it times how long it takes for it to be received
+  - Uses checksum to detect transmission errors
+- Flow Control: TCP provides flow control to ensure that the network does not become overloaded.
+  - Only a certain amount of data can be sent at any one time. This is controlled by a Sliding Window mechanism.
+- Retry Mechanism: TCP provides a retry mechanism to ensure that a segment is sent again if it is lost.
+  - If no acknowledgement is received within a certain time frame, the segment is resent.
+
+### TCP Header
+The TCP header consists of a:
+- **16-bit source port:** Used to identify the sending port
+- **16-bit destination port:** Used to identify the receiving port
+- **32-bit sequence number:** Used to define the first byte number of the datagram with the number not always starting from zero.
+- **32-bit acknowledgment number:** Used to indicate explicitly that a specific set of data was received successfully. It also indicates the next bytes expected sequence number from the other side of the communication.
+- **9-bit Control Bits field:** A set of siz standard and three extended control flags used to indicate the purpose and contents of the segment.
+- **16-bit Window field:** Used to indicate the size of the TCP receiver buffer. This is measured in bytes.
+- **16-bit Checksum field:** Used to detect transmission errors.
+- **16-bit Urgent Pointer field:** Used in conjunction with the urgent flag, this field indicates the end of the urgent data sent in the segment.
+
+![TCP Header](./assets/tcp-header.png)
+
+### UDP Protocol
+UDP is a connectionless protocol, it does not make a connection with the destination before data can be sent. This comes with the advantage of being fast and simple however, due to this, the the data delivery service can be unreliable.
+
+![UDP Header](./assets/udp-header.png)
+
+**UDP Features:**
+- **No connection handling:** Each datagram is an independent message that the sender transmits without UDP providing any way to establish, manage, or close a connection.
+- **No delivery guarantee:** Datagrams are not sequenced and are not acknowledged. This means that any datagram sent is not guaranteed to be delivered or received. The Application layer must provide tracking and retransmission mechanisms to ensure data is received.
+- **No error checking:** There are no guarantees that the packets will be received correctly or even at all.
+
+### ARP Protocol
+The ARP protocol is used to resolve a logical IP address to a physical MAC address for LAN communication. ARP operates on both layers two and three of the OSI model.
+
+Every frame contains both a MAC and IP source and destination address. When a packet is ready to be sent to the network access layer, the destination devices MAC address must be retrieved before the frame header can be constructed and, in turn, before data can be delivered.
+
+The ARP protocol does this via a request/reply pair of transmission on the local network. First, the ARP protocol checks to see if the target host's MAC address is already in the ARP cache, if not the originator transmits a broadcast requesting the hardware address of the target host. The target host, upon receiving the request, responds unicast back with the hardware address of the target host.
+
+### ARP Cache
+To avoid sending requests to the same device multiple times, devices will store learning IP address-to-MAC address pairs in a temporary location in RAM. These ARP cache entries are not kept indefinitely and are purged within a matter of minutes after being used. This is to avoid the storage of outdated information which could result from a changed NIC or IP address.
+
+An ARP request is sent as a broadcast address so that every host on the network records the mapping of requesters IP and MAC addresses to its ARP cache table for future reference.
+
+### ARP Request
+An ARP request consists of a two-step process: a request and a reply. 
+
+- Direct delivery (A -> B):
+  - A sends out a broadcast ARP request message to the network. B, C, and D will all receive the broadcast message but only B will respond with a unique ARP reply.
+  ![ARP request example diagram](./assets/arp-request-direct.png)
+- Indirect delivery (A -> C):
+  - A sends out a broadcast ARP request message to the routers MAC address. 
+  - The router will then respond with an ARP reply message via unicast. 
+  - Finally the router will uphold the received data and then process the relay.
+    - The router will send out a broadcast ARP request to request for C's MAC address
+    - C will respond with an ARP reply message via unicast
+    - The router will re-package the data and forward the frame to A
+  ![ARP request indirect diagram](./assets/arp-request-indirect.png)
+
+### ICMP Protocol
+The ICMP protocol is a protocol that sits in the network layer and will report any errors, leaving the correction of them to higher level protocols. ICMP will always report back to the originator of the request with information about any errors, if any at all.
+
+ICMP messages are encapsulated inside of IP datagrams before going down to the data link layer and include the first eight bytes of the problem datagram to allow the originator to determine the nature of the error.
+
+**ICMP Features:**
+- Assists in diagnosis of network problems sending error messages back to the originator of the request.
+- Often occurs in pairs: queries and replies
+- Assists in obtaining specific information from routers/hosts
+- Is used by routers and hosts
+
+### ICMP Message Types
+
+#### Destination Unreachable
+This error occurs when a router cannot forward a datagram. If this occurs, the router will send a "Destination Unreachable" message back to the originator and then drop the datagram.
+
+| Code | Description |
+|------|-------------|
+| 0 | Network is unreachable |
+| 1 | Host is unreachable |
+| 2 | Protocol is unreachable |
+| 3 | Port is unreachable |
+| 4 | Fragmentation needed and DF flag set |
+
+#### Time Exceeded
+This error occurs when a router cannot forward a datagram because it has exceeded its time to live. When a packet is sent, its TTL is decremented by one at each hop. If the TTL reaches zero, the packet is dropped with the router who dropped the packet sending the "Time Exceeded" error message to the originator.
+
+#### Echo Request/Reply
+A host or router can send an echo-request message to another host or router to verify that the host is alive. The host or router will send an echo-reply message back to the originator of the request.
+
+### Problem Solving Process
+
+![Problem Solving Process Flow Diagram](./assets/problem-solving-process.png)
+
+### Trial and Error
+Trial and error is a method of problem solving that involves trying different solutions to a problem until the correct solution is found. This method is often used when the problem is not well understood or when the problem is not well defined.
+
+This is however, not always the best approach and is not to be relied on exclusively.
+
+### Solve by Example
+Solve by example is a method of problem solving where you compare the thing that isn't functioning with something that does making modifications to the non-functioning item until it performs like the functioning item.
+
+This method can only really be used when there is a working sample with a similar environment as the machine with the problem. When enacting this method, it's important to ensure not to make changes that could cause conflicts as well as caution not to destroy and pre-existing data.
+
+### Replacement
+The replacement method is only effective if the the problem source can be determined and the source is a defective part.
+
+The rules of the replacement method are as follows:
+- Narrow the list of potentially defective parts down to a few candidates.
+- Make sure the correct replacement parts are available on hand
+- Replace only one part at a time
+- If the first replacement doesn't fix the problem, reinstall the original part before replacing the next part
+
+### Step-by-Step with the OSI Model
+This method can be done either top-down or bottom-up:
+- Top-down: Starting at the application layer, keep testing at each layer until the problem is resolved.
+- Bottom-up: Starting at the physical layer, keep testing at each layer until the problem is resolved.
+
+### Common Problems
+- Default gateway is not set:
+  - The default gateway is the address of the router that the PC will use to access the outside world. It must be physically and logically connected.
+- Subnetting error:
+  - Is the device in the same subnet as other devices on the local link
+  - Is the subnet mask correct
+- Cabling:
+  - Not connected correctly
+  - Damaged
+  - Incorrect cabling used
+- Routing:
+  - Wrong or missing entries
+  - Summarisation error
+- Routing interfaces:
+  - Interfaces are disabled by default
+  - Clock rate on DCE interfaces must be set
+ 
