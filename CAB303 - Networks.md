@@ -596,7 +596,7 @@ IPv4 and IPv6 are both protocols found at the network layer with IPv4 being the 
   - The IP address of the destination node.
 
 ### IP Fragmentation
-IP fragmentation is a required for most data transfers. This is due to the fact that every network has a unique limit e.g. the maximum transmission unit (MTU) for the size of datagrams that can be processed at any given time.
+IP fragmentation is a requirement for most data transfers. This is due to the fact that every network has a unique limit e.g. the maximum transmission unit (MTU) for the size of datagrams that can be processed at any given time.
 
 If a datagram that's being sent it too large for the receiving servers MTU, then the datagram must be fragmented into smaller sizes in order to be successfully transmit.
 
@@ -892,6 +892,9 @@ Every frame contains both a MAC and IP source and destination address. When a pa
 
 The ARP protocol does this via a request/reply pair of transmission on the local network. First, the ARP protocol checks to see if the target host's MAC address is already in the ARP cache, if not the originator transmits a broadcast requesting the hardware address of the target host. The target host, upon receiving the request, responds unicast back with the hardware address of the target host.
 
+**ARP Frame Format:**
+![ARP Frame Format](./assets/arp-frame-diagram.png)
+
 ### ARP Cache
 To avoid sending requests to the same device multiple times, devices will store learning IP address-to-MAC address pairs in a temporary location in RAM. These ARP cache entries are not kept indefinitely and are purged within a matter of minutes after being used. This is to avoid the storage of outdated information which could result from a changed NIC or IP address.
 
@@ -1131,3 +1134,46 @@ A DHCP server is composed of the following:
 - Computers can easily be moved and request new IP configurations from the DHCP server
 - IP lease time can be controlled
 - IP addresses can be reusable for other computers on the network
+
+<br />
+
+<h2 id="week8">Week 8: Network Security</h2> 
+
+### Cyber-security Terms
+- **Vulnerability**: A weakness in a system, application, or network that is subject to exploitation or misuse.
+- **Threat**: A potential cause of an incident, that may result in harm of systems and organisations.
+- **Risk**: The likelihood of a threat exploiting a vulnerability to breach security or cause harm.
+
+## IP Protocol Features
+- **Best effort delivery**: 
+  - IP does not guarantee delivery of packets, this functionality is left up to a higher layer. If a packet is lost, it is lost. 
+  - The network has variable delays. This means that any packets sent in a specific order will not necessarily arrive in the same order.
+- **Connectionless**:
+  - Each packet is individually addressed and routed rather than a connection being established between the source and destination pre sending. This means it's possible for two packets from the same source to take separate paths to the destination.
+- **Routing**:
+  - Packets usually go through a series of routers before they can reach their destination. AT each node in the network, the packet is examined and a decision is made on how to route the packet to the next node.
+- **Quality of Service (QoS) control**:
+  - QoS is a feature of IP that allows the network to prioritise traffic. This is done by assigning a priority to each packet.
+
+### IP Spoofing/DoS 
+Due to IPv4 not having no security functions, it's possible for an attacker to send packets/datagrams from a false source address to disguise itself.
+
+Denial of Service (DoS) attacks are a type of attack where an attacker floods a network with traffic that appears to be from a legitimate source IP address to prevent legitimate users from accessing the network.
+
+### ARP Poisoning/Spoofing
+ARP Poisoning is a type of attack where an attacker sends a malicious ARP packet to a victim machine over a LAN to change the mapping of the attackers MAC address with the IP address of another host.
+
+### TCP Threats
+- **TCP SYN Flood**: A type of DoS attack where an attacker sends a large number of TCP SYN packets to a server to consume the servers resources and prevent legitimate users from accessing the server.
+- **Predicting TCP Sequence Numbers**: An attacker can predict the sequence numbers of TCP packets by sending a large number of TCP SYN packets to a server and observing the sequence numbers of the SYN/ACK packets sent back. If an attacker can predict both the sequence number of an ongoing communication session it can carry out an injection attack to insert corrupted or malicious data into the session.
+
+### DNS Threats
+Due to the DNS scheme not containing any authentication or no integrity checks, it's possible for a number of attacks to be carried out against DNS servers.
+
+- **DNS Cache Poisoning**: An attacker can poison the DNS cache of a client by sending a malicious DNS response to the client. This response will contain a false IP address for a domain name that the client is trying to access. The client will then cache this false IP address and will be unable to access the legitimate domain name. This can also allow the attacker to redirect the client to a malicious website.
+- **DNS Flood**: An attacker can flood a DNS server with a large number of DNS requests to consume the servers resources and prevent legitimate users from accessing the server.
+
+### Security Attacks
+There are two types of attacks:
+1. **Passive**: An attacker does not attempt to modify or destroy data, they simply observe the network traffic to gain additional information.
+2. **Active**: An attacker attempts to modify or destroy data. This can be done through a number of methods: masquerading, replay, modification, insertion, deletion, denial of service, and more.
