@@ -15,10 +15,10 @@ Dr Vicky Liu | Notes for CAB432 at the Queensland University of Technology
 		<li><a href="#week5">Week 5</a>: Routing</li>
 		<li><a href="#week6">Week 6</a>: TCP/IP Protocols and Architecture</li>
 		<li><a href="#week7">Week 7</a>: Application-layer protocols</li>
-		<li><a href="#week8">Week 8</a>: </li>
-		<li><a href="#week9">Week 9</a>: </li>
-		<li><a href="#week10">Week 10</a>: </li>
-		<li><a href="#week11">Week 11</a>: </li>
+		<li><a href="#week8">Week 8</a>: Network Security</li>
+		<li><a href="#week9">Week 9</a>: Network Security and Service Level Agreement (SLA)</li>
+		<li><a href="#week10">Week 10</a>: N/A</li>
+		<li><a href="#week11">Week 11</a>: Introduction to IPv6</li>
 		<li><a href="#week12">Week 12</a>: </li>
 		<li><a href="#week13">Week 13</a>: </li>
 	</ul>
@@ -1177,3 +1177,162 @@ Due to the DNS scheme not containing any authentication or no integrity checks, 
 There are two types of attacks:
 1. **Passive**: An attacker does not attempt to modify or destroy data, they simply observe the network traffic to gain additional information.
 2. **Active**: An attacker attempts to modify or destroy data. This can be done through a number of methods: masquerading, replay, modification, insertion, deletion, denial of service, and more.
+
+<br />
+
+<h2 id="week9">Week 9: Network Security and Service Level Agreement (SLA)</h2> 
+
+### Network Security Policies
+Network security policies help provide a direction on which a control framework can be built. They are documents that define a set of rules describing what is and isn't allowed on a network and help secure the organisations data/assets against external and internal threats. These documents also mention ways of enforcing these rules and steps to be taken if the rules are breached.
+
+**Example Network Security Policy:**
+- **Access Control Policy**: Specifies how and when a user can access some network resource
+- **Privacy Policy**: Describes what staff, customers, and business partners can expect for monitoring and reporting network use
+- **Acceptable use Policy**: Describes what purposes network resources can be used and what constitutes proper or improper use of network resources 
+- **Auditing Policy**: Explains the manner in which security compliance or violations can be verified and the consequences of non-compliance
+
+### CIA Triad
+The CIA triad is a set of three principles that are used to describe the security of an organisation. These principles are:
+1. Confidentiality: The protection of information from unauthorised access.
+2. Integrity: The protection of information from unauthorised modification.
+3. Availability: The protection of information from unauthorised denial of access.
+
+### Types of Security Control
+- Administrative: Controls that are implemented through policies and procedures.
+- Technical: Controls that are implemented through hardware and software.
+- Physical: Controls that are implemented through physical security measures.
+
+### Authentication
+Authentication is the process of verifying the identity of a user or device. Multi-factor authentication requires a user to supply two or more types of authentication drawn from the following categories:
+- Knowledge: Something the user knows, such as a password or PIN.
+- Possession: Something the user has, such as a token or smart card.
+- Inherence: Something the user is, such as a fingerprint or retina scan.
+
+### Auditing
+Auditing is the process of monitoring and recording the use of a system to ensure that it is being used in accordance with the organisations security policy. It can also be used to determine abnormal behaviour and potentially detect system or network intrusion attacks.
+
+### Encryption
+Encryption is the process of encoding data to make it unreadable to anyone without the correct key. Encryption is used to protect data in transit and at rest. Encryption mechanisms can be used to achieve data confidentiality and integrity against certain attacks such as:
+- Forgery
+- Repudiation
+- Eavesdropping
+
+### Cryptography
+Cryptography methods can be broken down into two categories:
+- Symmetric Cryptography: A single key is used to encrypt and decrypt data.
+- Asymmetric (public key) Cryptography: Two keys are used to encrypt and decrypt data. One key is used to encrypt data and the other key is used to decrypt data.
+
+To ensure confidentiality, the sender will encrypt their message with the receivers public key. This ensures that only the receiver (the person with the private key) can decrypt and read the message.
+
+### Digital Signatures
+A digital signature is a way to verify the authenticity and integrity of a message. Digital signatures are achieved using public key cryptographic techniques in addition to cryptographic has functions.
+
+**Digital Signature Generation**:
+1. The document is placed to a hash function to generate a MAC
+2. The MAC is then encoded with the signers private key to generate a digital signature
+3. The document, digital signature, and the signers public key are sent to the receiver
+
+### Public Key Infrastructure (PKI) and Certificate Authorities (CA)
+PKI is a framework that allows organisations to manage the creation, distribution, and revocation of public key certificates.
+
+A certification authority is a trusted third party that issues digital certificates to users and organisations. 
+
+### Digital Certificates
+A digital certificate is a document that binds a public key to an entity. It contains information such as:
+- The key owners identity and public key
+- Information affixed by the CA (issuer, validity, serial number, etc.)
+- CA's signature 
+
+### Virtual Private Networks (VPN)
+A VPN is a private network that uses a public network (usually the internet) to connect remote sites or users together. VPNs are used to provide secure remote access to a private network.
+
+**Common VPNs:**
+- IPSec -> Network Layer
+- Transport Layer Security (TLS)/Secure Sockets Layer (SSL) -> Transport Layer
+
+**VPN Communication Model**:
+- **Site-to-Site VPN**: A VPN that connects two or more remote sites together.
+- **Client-to-Site VPN**: A VPN that connects a remote user to a remote site.
+- **Client-to-Client VPN**: A VPN that connects two remote users together.
+
+### IPSec VPN
+An IPSec VPN can be implemented using two different modes:
+- **Transport Mode**: A host-to-host VPN where only the payload is authenticated and protected
+- **Tunnel Mode**: A network-to-network VPN where the entire packet is authenticated and protected
+
+### Firewall
+A firewall is a network security device that monitors incoming and outgoing network traffic and allows or blocks specific traffic based on a defined set of security rules.
+
+**Firewall Types:**
+- Hardware vs Software
+- Network-based vs Host-based
+- Stateful vs Stateless
+- Application-layer
+
+#### Hardware vs Software
+A firewall can be a hardware device, software or a combination of both.
+
+- Hardware Firewall: A dedicated device with two or more network interfaces typically placed between a corporate LAN and the WAN connection
+- Software Firewall: An individual device running on the OS. Can either be host-based or personal.
+
+#### Network-based vs Host-based
+A firewall can be network-based or host-based.
+
+- Network-based Firewall: Used to protect an entire private network, this firewall type is typically a dedicated hardware device.
+- Host-based Firewall: Used to protect a single host, this firewall type is typically a software application. 
+
+### Stateless Packet Filtering
+Stateless packet filtering, also know as packet filtering, is the filtering of network traffic based on the information in the IP header. Each packet is examined individually regardless of other packets that are part of the same session connection.
+
+### Stateful Packet Filtering
+Stateful packet filtering operates at the network layer and monitors specific network protocol session messages across a network.
+
+### Application-based Firewall
+An application based firewall operates at the application layer and inspects the context and content of packets against a defined set of rules. This firewall type learns application behaviours by observing how an application behaves over time, creating a baseline of normal behaviour.
+
+This type of firewall is typically not used however as it is very resource intensive and can be difficult to maintain.
+
+### Application Proxy Firewall
+An application proxy firewall, also know as an application gateway or application proxy, where connections are established through the proxy firewall. An external host sends a request to the proxy firewall and, if the request is allowed, the proxy firewall establishes a connection to the internal host and forwards the request. When an internal host requests access to an external site, the proxy will forward the request on behalf of the internal host.
+
+This type of firewall is also very resource intensive and can be difficult to maintain.
+
+### Intrusion Detection System (IDS)
+An IDS is a system that monitors network traffic for malicious activity and alerts the network administrator of potential attacks. An IDS can be either a host-based or network-based system.
+
+### Intrusion Prevention System (IPS)
+An IPS is a system that can take countermeasures if an attack is in progress. It does so via:
+- Firewall reconfiguration
+- Connection termination / reset
+- Denial of service
+
+### Service-Level Agreements (SLAs)
+A service-level agreement is a contract between a service provider and a customer that defines the services that will be provided to the customer, as well as the service levels that the provider will maintain.
+
+An SLA should contain the following:
+- Objectives
+- Service descriptions
+- Provider's and client's duties
+- Measurable performance metrics
+- Penalties for non-compliance and remedies
+- ...and more
+
+### Metric - Network Availability
+- Network availability is the percentage of time that a network is operational. The gold standard for this is 99.999%.
+- Network uptime is the percentage of time that a network is operational. 8,760 hours in a year means the yearly uptime percentage is equal to the number of hours the network is operational divided by 8,760.
+
+### Metric - Network Performance
+- Bandwidth (Network capacity): The maximum amount of data that can be transmitted over a network in a given time period.
+- Throughput (Actual data deliver): The actual amount of data travelling over a network in a given time period.
+- Latency: The time for a network to transmit data across a certain distance, usually measured in milliseconds.
+- Jitter: The irregular time delay in the sending of data packets across a network.
+- Packet Loss: The failure of data packets to reach their destination.
+
+<br />
+
+<h2 id="week10">Week 10: N/A</h2> 
+
+<br />
+
+<h2 id="week11">Week 11: Introduction to IPv6</h2> 
+
