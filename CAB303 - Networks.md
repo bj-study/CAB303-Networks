@@ -19,7 +19,7 @@ Dr Vicky Liu | Notes for CAB432 at the Queensland University of Technology
 		<li><a href="#week9">Week 9</a>: Network Security and Service Level Agreement (SLA)</li>
 		<li><a href="#week10">Week 10</a>: N/A</li>
 		<li><a href="#week11">Week 11</a>: Introduction to IPv6</li>
-		<li><a href="#week12">Week 12</a>: </li>
+		<li><a href="#week12">Week 12</a>: IoT and Cloud Computing</li>
 		<li><a href="#week13">Week 13</a>: </li>
 	</ul>
 </ul>
@@ -567,9 +567,9 @@ IPv4 and IPv6 are both protocols found at the network layer with IPv4 being the 
 
 - Version
   - Indicates which version of the IP protocol is being used: IPv4 or IPv6.
-- Header Length
+- Header Length (IHL)
   - Denotes the length of the IP header.
-- Differentiated Services
+- Differentiated Services (DSCP)
   - Specifies a packets priority and informs routers the level of priority that should be applied when processing the packet.
 - Total Length
   - Denotes the total length of the IP packet. This includes the header and data.
@@ -1331,8 +1331,74 @@ An SLA should contain the following:
 <br />
 
 <h2 id="week10">Week 10: N/A</h2> 
+N/A - Semester break
 
 <br />
 
 <h2 id="week11">Week 11: Introduction to IPv6</h2> 
 
+### Network Address Translation (NAT)
+NAT, or network address translation, translates a private IP address to a public IP address and visa versa. Private addresses are used within local networks and are not routable on the internet. NAT enables private networks to communicate with the internet via converting private addresses to public addresses.
+
+NAT is used to conserve public IP addresses by allowing to one public address to be used by a number of private addresses to access to internet.
+
+Due to NAT performing address translations on both incoming and outgoing packets, it can slow down network performance. NAT also breaks down end-to-end communication and is incompatible with IP security in transport mode.
+
+### The Internet Assigned Numbers Authority (IANA)
+IANA is a department that is responsible for the global coordination of the DNS Root, IP addressing, and other Internet protocol resources.
+
+### IPv6
+IPv6 is the next generation of the internet protocol. It is a 128-bit addressing scheme that is designed to replace IPv4. 
+
+IPv6 is a major upgrade from IPv4 as it has:
+- Abundant address space
+- Auto-configuration
+- Quality of Service
+- Built-in security
+- Mobile IP
+- IPv6 address structure provides a hierarchy for future growth to facilitate core routing
+- Eliminates the need for NAT
+- Broadcast is replaced with multicast
+- Simplified header structure
+- Removed header checksums
+
+IPv6 uses slash notation with the decimal number after the slash representing the number of bits for the network portion of the address. For example:
+- 2001:0DB8:2021:2022:AAAA:BBBB:CCCC:DDDD/64
+- 2001:0DB8:2021:AAAA:BBBB:CCCC:DDDD:EEEE/48
+- 2001:0DB8:0:0:0:0:0:A/32
+
+The following can be used to describe just the network portion of the above addresses:
+- 2001:0DB8:2021:2022::/64
+- 2001:0DB8:2021::/48
+- 2001:0DB8::/32
+
+IPv6 has some vulnerabilities however:
+- Managing IPv6 addresses is more complex than IPv4
+- IPv6 address scanning is difficult with how many addresses there are
+- IPv6 introduces new security threats such as Transition, Extension Header Manipulation, Neighbour Discovery, DHCPv6, and more
+- IPv6 and IPv4 do share some common threats however such as Flooding, man-in-the-middle, Routing threats, and more
+
+
+### IPv6 Header
+
+![IPv6 Header](./assets/ipv6-header.png)
+
+- Traffic Class: Classifies IPv6 packet priority
+- Flow Label: Used to identify packets that belong to the same flow
+- Hop Limit: The maximum number of hops that a packet can make before it is discarded
+Payload Length: The length of the payload in bytes, including both the data and any extension headers
+
+| | IPv4 | IPv6 |
+| --- | --- | --- |
+| Address Length | 32-bit | 128-bit |
+| Address Notation | Decimal values with 4 octets separated by periods e.g. 192.168.0.1 | Hexadecimal values with 8 groups of 16 bits separated by colons e.g. 2001:0db8:85a3:0000:0000:8a2e:0370:7334 |
+| Address Space | $2^{32}$ (4.2 billion) | $2^{128}$ $(3.4 \times 10^{38})$ |
+| Header Length | Variable length of 20-60 bytes | Fixed length of 40 bytes |
+| No. of Header Fields | 13 | 8 |
+| Common Fields | Version, Time to Live | Version, Hop Limit |
+| Distinction | 1 field DSCP for QoS, 3 fields for fragmentation, Header checksum, variable header length | 2 fields for QoS, No header checksum, Fragmentation only done by sender, No total length |
+
+### IPv6 Transition Mechanisms
+- Dual Stack: A network that supports both IPv4 and IPv6. This however, does not necessarily fix the issue of IPv4 address depletion as it still requires IPv4 addresses to be used.
+- Tunnelling: A method of encapsulating IPv6 packets within IPv4 packets or visa verse. 
+- Translation: A method of mapping IPv4 packets to IPv6 packets and visa verse. This however, negates most of the compelling reasons for using IPv6 such as hierarchical routing, expanded address space, and streamlined IP headers.
