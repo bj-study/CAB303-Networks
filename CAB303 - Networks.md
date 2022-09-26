@@ -1402,3 +1402,57 @@ Payload Length: The length of the payload in bytes, including both the data and 
 - Dual Stack: A network that supports both IPv4 and IPv6. This however, does not necessarily fix the issue of IPv4 address depletion as it still requires IPv4 addresses to be used.
 - Tunnelling: A method of encapsulating IPv6 packets within IPv4 packets or visa verse. 
 - Translation: A method of mapping IPv4 packets to IPv6 packets and visa verse. This however, negates most of the compelling reasons for using IPv6 such as hierarchical routing, expanded address space, and streamlined IP headers.
+
+<br />
+
+<h2 id="week12">Week 12: IoT and Cloud Computing</h2> 
+
+### Long/Short Range IoT Technologies
+
+![Long/Short Range IoT Technologies](./assets/long-vs-short-technologies.png)
+
+### IoT Architecture
+There are generally two ways to structure an IoT project:
+1. Horizontal Architecture
+2. Vertical Architecture
+
+### Types of IoT Devices
+- End Device (E/D)
+  - Microcontroller
+  - Memory
+  - Transceiver
+  - Antenna
+  - Power Supply
+  - Hardware Interfaces
+  - Sensors: GPS, gas temperature, humidity, hunger, etc.
+- Gateway (G/W)
+  - IoT network interface
+  - Internet IP-based interface
+
+### IoT Setup
+1. Network Design (topology, placement, protocols)
+2. Hardware Assembly (Microcontroller, sensors, transceiver, antenna, power supply)
+3. Coding and Troubleshooting
+4. Data collection and analysis
+
+### Cloud Computing
+Cloud computing is an on-demand delivery of computing resources over the internet. It is a model for enabling ubiquitous, convenient, on-demand network access to a shared pool of configurable computing resources that can be rapidly provisioned and released with minimal management effort or service provider interaction.
+
+**Benefits of Cloud Computer**:
+- Reduced IT and operational costs
+- Scalability
+- Business continuity
+- Flexibility of work practices
+
+**Cloud computing risks**:
+- Vendor reliability
+- Vendor lock-in
+- Incompatibility
+- Service availability
+- Data security and privacy
+- Legal ownership of stored data
+
+### Cloud Computing Models
+1. Software as a Service (SaaS)
+2. Platform as a Service (PaaS)
+3. Infrastructure as a Service (IaaS)
